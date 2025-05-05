@@ -20,7 +20,7 @@ CommitLint:
 npm pkg set scripts.commitlint="commitlint --edit"
 echo "npm run commitlint \${1}" > .husky/commit-msg
 ```
-Or (Windows,Mac/Linux):
+OR (Windows,Mac/Linux):
 ```bash
 echo "npx --no commitlint --edit `$1" > .husky/commit-msg
 ```
