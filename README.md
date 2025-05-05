@@ -5,7 +5,7 @@ npm i -D husky prettier lint-staged @commitlint/cli @commitlint/config-conventio
 ```
 Eslint Initialization:
 ```bash
-npm init 
+npm init @eslint/config@latest
 ```
 ESlint Plugin and Prettier Config:
 ```bash
