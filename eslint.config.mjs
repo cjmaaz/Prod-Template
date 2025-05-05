@@ -5,7 +5,7 @@ import markdown from "@eslint/markdown";
 import stylistic from "@stylistic/eslint-plugin";
 import importPlugin from "eslint-plugin-import";
 import unicorn from "eslint-plugin-unicorn";
-import { defineConfig } from "eslint/config";
+import { defineConfig, globalIgnores } from "eslint/config";
 
 
 export default defineConfig([
@@ -62,5 +62,6 @@ export default defineConfig([
       "build/",
       "*.config.*" // Ignore config files
     ]
-  }
+  },
+  globalIgnores([".vscode/","package-lock.json"])
 ]);
