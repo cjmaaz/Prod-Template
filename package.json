@@ -1,9 +1,13 @@
 {
+  "name": "modern-fullstack-practice",
+  "version": "1.0.0",
+  "type": "module",
   "scripts": {
-    "prepare": "husky install",
+    "prepare": "husky",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "commitlint": "commitlint --edit"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.8.0",
