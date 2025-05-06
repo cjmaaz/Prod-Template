@@ -63,5 +63,5 @@ export default defineConfig([
       "*.config.*" // Ignore config files
     ]
   },
-  globalIgnores([".vscode/","package-lock.json"])
+  globalIgnores([".vscode/", "package-lock.json", ".prettierignore", ".gitignore"])
 ]);
