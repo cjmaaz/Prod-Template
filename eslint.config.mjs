@@ -152,6 +152,20 @@ export default defineConfig([
       "require-await": "error",
       "yoda": "error",
 
+      // Import rules
+      "import/order": ["error",{
+          groups: [
+            "builtin",
+            "external",
+            "internal",
+            "parent",
+            "sibling",
+            "index"
+          ],
+          "newlines-between": "always"
+        }
+      ],
+
       // Using @stylistic/js plugin for formatting (Prettier-like rules)
       "@stylistic/js/array-bracket-spacing": ["error", "never"],
       "@stylistic/js/arrow-parens": ["error", "always"],
