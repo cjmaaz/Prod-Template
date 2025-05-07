@@ -1,67 +1,321 @@
+// eslint.config.js
 import js from "@eslint/js";
-import globals from "globals";
-import json from "@eslint/json";
-import markdown from "@eslint/markdown";
-import stylistic from "@stylistic/eslint-plugin";
-import importPlugin from "eslint-plugin-import";
-import unicorn from "eslint-plugin-unicorn";
 import { defineConfig, globalIgnores } from "eslint/config";
-
+import globals from "globals";
+import importPlugin from "eslint-plugin-import";
+import nodePlugin from "eslint-plugin-node";
+import promisePlugin from "eslint-plugin-promise";
+import securityPlugin from "eslint-plugin-security";
+import sonarjsPlugin from "eslint-plugin-sonarjs";
+import unicornPlugin from "eslint-plugin-unicorn";
+import stylisticJs from "@stylistic/eslint-plugin-js";
 
 export default defineConfig([
-  { files: ["**/*.{js,mjs,cjs}"], plugins: { js }, extends: ["js/recommended"] },
-  { files: ["**/*.{js,mjs,cjs}"], languageOptions: { globals: globals.node } },
-  { files: ["**/*.json"], plugins: { json }, language: "json/json", extends: ["json/recommended"] },
-  { files: ["**/*.md"], plugins: { markdown }, language: "markdown/gfm", extends: ["markdown/recommended"] },
+  globalIgnores([".vscode/",
+    ".prettierignore",
+    ".gitignore",
+    "node_modules/",
+    "dist/",
+    "build/",
+    "*.config.*"
+  ]),
+  // Base configuration for all JavaScript files
   {
-    plugins: {
-      "@stylistic": stylistic,
-      import: importPlugin,
-      unicorn
+    files: ["**/*.js"],
+    languageOptions: {
+      ecmaVersion: 2022,
+      sourceType: "module",
+      globals: {
+        ...globals.node,
+        ...globals.es2022
+      }
     },
+    plugins: {
+      js,
+      import: importPlugin,
+      node: nodePlugin,
+      promise: promisePlugin,
+      security: securityPlugin,
+      sonarjs: sonarjsPlugin,
+      unicorn: unicornPlugin,
+      '@stylistic/js': stylisticJs
+    },
+    settings: {
+      "import/resolver": {
+        node: {
+          extensions: [".js", ".mjs", ".cjs", ".json"]
+        }
+      },
+      "node": {
+        tryExtensions: [".js", ".mjs", ".cjs", ".json"],
+        version: ">=16.0.0"  // Set minimum Node.js version your app requires
+      }
+    },
+    // Use recommended configurations from plugins
+    extends: [
+      "eslint:recommended",
+      "plugin:node/recommended",
+      "plugin:import/recommended",
+      "plugin:promise/recommended",
+      "plugin:security/recommended",
+      "plugin:sonarjs/recommended",
+      "plugin:unicorn/recommended"
+    ],
     rules: {
-      // Core rules
-      "no-console": "warn",
+      // Possible Problems
+      "array-callback-return": "error",
+      "no-await-in-loop": "warn", // Warning because there are valid use cases in API calls
+      "no-constant-binary-expression": "error",
+      "no-constructor-return": "error",
+      "no-duplicate-imports": "error",
+      "no-promise-executor-return": "error",
+      "no-self-compare": "error",
+      "no-template-curly-in-string": "warn",
+      "no-unmodified-loop-condition": "error",
+      "no-unreachable-loop": "error",
+      "no-unused-private-class-members": "error",
+      "no-unused-vars": ["warn", {
+        argsIgnorePattern: "^_",
+        varsIgnorePattern: "^_",
+        caughtErrorsIgnorePattern: "^_"
+      }],
+      "no-use-before-define": ["error", {
+        functions: false,
+        classes: true,
+        variables: true
+      }],
+      "require-atomic-updates": "error",
+
+      // Suggestions
+      "arrow-body-style": ["error", "as-needed"],
+      "block-scoped-var": "error",
+      "camelcase": ["error", { properties: "never" }],
+      "complexity": ["warn", 15],
+      "consistent-return": "error",
+      "curly": ["error", "multi-line"],
+      "default-case": "error",
+      "default-case-last": "error",
+      "default-param-last": "error",
+      "dot-notation": "error",
+      "eqeqeq": ["error", "always", { null: "ignore" }],
+      "func-style": ["error", "expression"],
+      "max-depth": ["warn", 4],
+      "max-lines": ["warn", 500],
+      "max-nested-callbacks": ["warn", 4], // Increased for Node.js async callbacks
+      "max-params": ["warn", 5], // Slightly increased for middleware patterns
+      "no-alert": "error", // Not relevant in Node.js but good to keep
+      // "no-console": "off", // Console is commonly used in Node.js
+      "no-console": ["warn", { allow: ["error", "warn", "info"] }], // Allow some console methods in production
       "no-debugger": "error",
+      "no-else-return": "error",
+      "no-empty-function": "error",
+      "no-eval": "error",
+      "no-extend-native": "error",
+      "no-extra-bind": "error",
+      "no-floating-decimal": "error",
+      "no-implicit-coercion": "error",
+      "no-implied-eval": "error",
+      "no-invalid-this": "error",
+      "no-labels": "error",
+      "no-lone-blocks": "error",
+      "no-lonely-if": "error",
+      "no-loop-func": "error",
+      "no-magic-numbers": ["warn", {
+        ignore: [-1, 0, 1, 2, 100, 200, 201, 204, 400, 401, 403, 404, 500], // HTTP status codes
+        ignoreArrayIndexes: true
+      }],
+      "no-multi-spaces": "error",
+      "no-multi-str": "error",
+      "no-nested-ternary": "error",
+      "no-new": "error",
+      "no-new-func": "error",
+      "no-new-wrappers": "error",
+      "no-param-reassign": ["error", { props: false }], // Less strict for req/res in Express
+      "no-plusplus": ["error", { allowForLoopAfterthoughts: true }],
+      "no-proto": "error",
+      "no-return-assign": ["error", "except-parens"],
+      "no-return-await": "error",
+      "no-script-url": "error",
+      "no-sequences": "error",
+      "no-shadow": "error",
+      "no-throw-literal": "error",
+      "no-undef-init": "error",
+      "no-unneeded-ternary": "error",
+      "no-unused-expressions": "error",
+      "no-useless-call": "error",
+      "no-useless-computed-key": "error",
+      "no-useless-concat": "error",
+      "no-useless-constructor": "error",
+      "no-useless-rename": "error",
+      "no-useless-return": "error",
+      "no-var": "error",
+      "no-void": "error",
+      "object-shorthand": "error",
+      "prefer-arrow-callback": "error",
+      "prefer-const": "error",
+      "prefer-destructuring": ["error", {
+        array: false,
+        object: true
+      }],
+      "prefer-promise-reject-errors": "error",
+      "prefer-rest-params": "error",
+      "prefer-spread": "error",
+      "prefer-template": "error",
+      "radix": "error",
+      "require-await": "error",
+      "yoda": "error",
 
-      // Stylistic rules
-      "@stylistic/semi": ["error", "always"],
-      "@stylistic/quotes": ["error", "single", { avoidEscape: true }],
-      "@stylistic/jsx-quotes": ["error", "prefer-single"],
+      // Using @stylistic/js plugin for formatting (Prettier-like rules)
+      "@stylistic/js/array-bracket-spacing": ["error", "never"],
+      "@stylistic/js/arrow-parens": ["error", "always"],
+      "@stylistic/js/arrow-spacing": ["error", { before: true, after: true }],
+      "@stylistic/js/block-spacing": ["error", "always"],
+      "@stylistic/js/brace-style": ["error", "1tbs", { allowSingleLine: true }],
+      "@stylistic/js/comma-dangle": ["error", "only-multiline"],
+      "@stylistic/js/comma-spacing": ["error", { before: false, after: true }],
+      "@stylistic/js/comma-style": ["error", "last"],
+      "@stylistic/js/computed-property-spacing": ["error", "never"],
+      "@stylistic/js/eol-last": ["error", "always"],
+      "@stylistic/js/func-call-spacing": ["error", "never"],
+      "@stylistic/js/indent": ["error", 2, { SwitchCase: 1 }],
+      "@stylistic/js/key-spacing": ["error", { beforeColon: false, afterColon: true }],
+      "@stylistic/js/keyword-spacing": ["error", { before: true, after: true }],
+      "@stylistic/js/linebreak-style": ["error", "unix"],
+      "@stylistic/js/max-len": ["error", {
+        code: 100,
+        ignoreUrls: true,
+        ignoreStrings: true,
+        ignoreTemplateLiterals: true,
+        ignoreRegExpLiterals: true
+      }],
+      "@stylistic/js/multiline-ternary": ["error", "always-multiline"],
+      "@stylistic/js/new-parens": "error",
+      "@stylistic/js/newline-per-chained-call": ["error", { ignoreChainWithDepth: 3 }],
+      "@stylistic/js/no-mixed-spaces-and-tabs": "error",
+      "@stylistic/js/no-multiple-empty-lines": ["error", { max: 2, maxEOF: 1 }],
+      "@stylistic/js/no-tabs": "error",
+      "@stylistic/js/no-trailing-spaces": "error",
+      "@stylistic/js/no-whitespace-before-property": "error",
+      "@stylistic/js/object-curly-newline": ["error", { consistent: true }],
+      "@stylistic/js/object-curly-spacing": ["error", "always"],
+      "@stylistic/js/object-property-newline": ["error", { allowAllPropertiesOnSameLine: true }],
+      "@stylistic/js/operator-linebreak": ["error", "before"],
+      "@stylistic/js/padded-blocks": ["error", "never"],
+      "@stylistic/js/quotes": ["error", "single", { avoidEscape: true, allowTemplateLiterals: true }],
+      "@stylistic/js/rest-spread-spacing": ["error", "never"],
+      "@stylistic/js/semi": ["error", "always"],
+      "@stylistic/js/semi-spacing": ["error", { before: false, after: true }],
+      "@stylistic/js/semi-style": ["error", "last"],
+      "@stylistic/js/space-before-blocks": "error",
+      "@stylistic/js/space-before-function-paren": ["error", {
+        anonymous: "always",
+        named: "never",
+        asyncArrow: "always"
+      }],
+      "@stylistic/js/space-in-parens": ["error", "never"],
+      "@stylistic/js/space-infix-ops": "error",
+      "@stylistic/js/space-unary-ops": ["error", { words: true, nonwords: false }],
+      "@stylistic/js/spaced-comment": ["error", "always", {
+        line: { markers: ["*package", "!", "/", ",", "="] },
+        block: { balanced: true, markers: ["*package", "!", ",", ":", "::", "flow-include"], exceptions: ["*"] }
+      }],
+      "@stylistic/js/switch-colon-spacing": ["error", { after: true, before: false }],
+      "@stylistic/js/template-curly-spacing": ["error", "never"],
+      "@stylistic/js/template-tag-spacing": ["error", "never"],
 
-      // Import rules
-      "import/order": [
-        "error",
-        {
-          groups: [
-            "builtin",
-            "external",
-            "internal",
-            "parent",
-            "sibling",
-            "index"
-          ],
-          "newlines-between": "always"
+      // Import Plugin Rules
+      "import/first": "error",
+      "import/no-duplicates": "error",
+      "import/no-mutable-exports": "error",
+      "import/no-unresolved": "error",
+      "import/no-cycle": "error",
+      "import/order": ["error", {
+        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
+        "newlines-between": "always",
+        "alphabetize": { order: "asc", caseInsensitive: true }
+      }],
+
+      // Node.js Specific Rules
+      "node/no-deprecated-api": "error",
+      "node/no-extraneous-import": "error",
+      "node/no-extraneous-require": "error",
+      "node/no-missing-import": "error",
+      "node/no-missing-require": "error",
+      "node/process-exit-as-throw": "error",
+      "node/no-path-concat": "error", // Use path.join instead of string concatenation
+      "node/global-require": "error",
+      "node/callback-return": ["error", ["callback", "cb", "next", "done"]],
+      "node/handle-callback-err": ["error", "^(err|error)$"],
+      "node/no-new-require": "error",
+      "node/no-process-env": "off", // Process.env is commonly used but consider using a config package
+      "node/no-process-exit": "warn", // Discourage but not forbid process.exit()
+      "node/no-sync": ["warn", { allowAtRootLevel: false }], // Discourage synchronous methods
+
+      // Security Plugin Rules
+      "security/detect-non-literal-fs-filename": "warn", // Important for preventing path traversal
+      "security/detect-object-injection": "warn",
+      "security/detect-possible-timing-attacks": "warn",
+      "security/detect-eval-with-expression": "error",
+      "security/detect-no-csrf-before-method-override": "error",
+      "security/detect-buffer-noassert": "error",
+      "security/detect-child-process": "warn",
+      "security/detect-disable-mustache-escape": "error",
+      "security/detect-new-buffer": "error",
+      "security/detect-pseudoRandomBytes": "warn",
+      "security/detect-unsafe-regex": "warn",
+
+      // SonarJS Rules - Keeping key ones, refer to plugin for full list
+      "sonarjs/no-all-duplicated-branches": "error",
+      "sonarjs/no-element-overwrite": "error",
+      "sonarjs/no-identical-expressions": "error",
+      "sonarjs/no-one-iteration-loop": "error",
+      "sonarjs/no-use-of-empty-return-value": "error",
+      "sonarjs/cognitive-complexity": ["error", 15],
+      "sonarjs/max-switch-cases": ["error", 10],
+      "sonarjs/no-duplicate-string": ["warn", 5],
+
+      // Unicorn Rules tailored for Node.js
+      "unicorn/better-regex": "error",
+      "unicorn/catch-error-name": "error",
+      "unicorn/error-message": "error",
+      "unicorn/filename-case": ["error", {
+        "cases": {
+          "kebabCase": true
         }
-      ],
+      }],
+      "unicorn/no-array-for-each": "off", // forEach is common in Node.js
+      "unicorn/no-array-reduce": "off", // reduce is often used in data processing
+      "unicorn/no-null": "off", // Null is commonly used in Node.js APIs
+      "unicorn/prefer-module": "off", // Flexible for CommonJS or ESM
+      "unicorn/prefer-node-protocol": "error", // Use node: protocol for imports
 
-      // Unicorn rules
-      "unicorn/filename-case": [
-        "error",
-        {
-          case: "camelCase",
-          ignore: ["README.md"]
-        }
-      ]
+      // Promise Rules
+      "promise/always-return": "error",
+      "promise/no-return-wrap": "error",
+      "promise/param-names": "error",
+      "promise/catch-or-return": "error",
+      "promise/no-nesting": "warn",
+      "promise/no-promise-in-callback": "warn",
+      "promise/no-callback-in-promise": "warn",
+      "promise/no-return-in-finally": "error",
     }
   },
+
+  // Test files configuration
   {
-    ignores: [
-      "node_modules/",
-      "dist/",
-      "build/",
-      "*.config.*" // Ignore config files
-    ]
-  },
-  globalIgnores([".vscode/", "package-lock.json", ".prettierignore", ".gitignore"])
+    files: ["**/*.test.js", "**/*.spec.js", "**/__tests__/**", "**/tests/**"],
+    languageOptions: {
+      globals: {
+        ...globals.jest,
+        ...globals.mocha
+      }
+    },
+    rules: {
+      "no-magic-numbers": "off",
+      "max-lines": "off",
+      "max-nested-callbacks": "off",
+      "node/no-unpublished-require": "off",
+      "node/no-unpublished-import": "off"
+    }
+  }
 ]);
