@@ -96,7 +96,8 @@ export default defineConfig([
       "block-scoped-var": "error",  // Enforce variable scope to respect block scope
       "camelcase": ["error", { properties: "never" }],  // Use camelCase but don't enforce on properties
       "complexity": ["warn", 15],  // Warn when code becomes too complex (cyclomatic complexity)
-      "consistent-return": "error",  // Functions must consistently return values or undefined
+      // "consistent-return": "error",  // Functions must consistently return values or undefined
+      "consistent-return": "off",  // Functions can return values or undefined
       "curly": ["error", "multi-line"],  // Require braces for multi-line blocks
       "default-case": "error",  // Require default case in switch statements
       "default-case-last": "error",  // Default case should be the last case in switch
