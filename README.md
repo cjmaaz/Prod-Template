@@ -12,7 +12,7 @@ npm init @eslint/config@latest
 ```
 ESlint Plugins::
 ```bash
-npm i -D eslint @eslint/js globals eslint-plugin-import eslint-plugin-node eslint-plugin-promise eslint-plugin-security eslint-plugin-sonarjs eslint-plugin-unicorn @stylistic/eslint-plugin-js
+npm i -D eslint @eslint/js globals eslint-plugin-import eslint-plugin-unicorn @stylistic/eslint-plugin-js
 ```
 Husky Config:
 ```bash
