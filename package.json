@@ -43,6 +43,6 @@
     "lint-staged": "^15.5.2"
   },
   "lint-staged": {
-    "*": "lint:fix"
+    "*": "eslint --fix"
   }
 }
