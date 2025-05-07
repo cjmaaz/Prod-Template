@@ -2,8 +2,12 @@
 import js from "@eslint/js";
 import { defineConfig, globalIgnores } from "eslint/config";
 import globals from "globals";
-import unicornPlugin from "eslint-plugin-unicorn";
 import importPlugin from "eslint-plugin-import";
+import nodePlugin from "eslint-plugin-node";
+import promisePlugin from "eslint-plugin-promise";
+import securityPlugin from "eslint-plugin-security";
+import sonarjsPlugin from "eslint-plugin-sonarjs";
+import unicornPlugin from "eslint-plugin-unicorn";
 import stylisticJs from "@stylistic/eslint-plugin-js";
 
 export default defineConfig([
@@ -31,6 +35,10 @@ export default defineConfig([
     plugins: {
       js,
       import: importPlugin,
+      node: nodePlugin,
+      promise: promisePlugin,
+      security: securityPlugin,
+      sonarjs: sonarjsPlugin,
       unicorn: unicornPlugin,
       '@stylistic/js': stylisticJs
     },
@@ -47,7 +55,13 @@ export default defineConfig([
     },
     // Use recommended configurations from plugins
     extends: [
-      "js/recommended",
+      "eslint:recommended",
+      "plugin:node/recommended",
+      "plugin:import/recommended",
+      "plugin:promise/recommended",
+      "plugin:security/recommended",
+      "plugin:sonarjs/recommended",
+      "plugin:unicorn/recommended"
     ],
     rules: {
       // Possible Problems
@@ -73,6 +87,7 @@ export default defineConfig([
         variables: true
       }],
       "require-atomic-updates": "error",
+
       // Suggestions
       "arrow-body-style": ["error", "as-needed"],
       "block-scoped-var": "error",
@@ -210,6 +225,57 @@ export default defineConfig([
       "@stylistic/js/template-curly-spacing": ["error", "never"],
       "@stylistic/js/template-tag-spacing": ["error", "never"],
 
+      // Import Plugin Rules
+      "import/first": "error",
+      "import/no-duplicates": "error",
+      "import/no-mutable-exports": "error",
+      "import/no-unresolved": "error",
+      "import/no-cycle": "error",
+      "import/order": ["error", {
+        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
+        "newlines-between": "always",
+        "alphabetize": { order: "asc", caseInsensitive: true }
+      }],
+
+      // Node.js Specific Rules
+      "node/no-deprecated-api": "error",
+      "node/no-extraneous-import": "error",
+      "node/no-extraneous-require": "error",
+      "node/no-missing-import": "error",
+      "node/no-missing-require": "error",
+      "node/process-exit-as-throw": "error",
+      "node/no-path-concat": "error", // Use path.join instead of string concatenation
+      "node/global-require": "error",
+      "node/callback-return": ["error", ["callback", "cb", "next", "done"]],
+      "node/handle-callback-err": ["error", "^(err|error)$"],
+      "node/no-new-require": "error",
+      "node/no-process-env": "off", // Process.env is commonly used but consider using a config package
+      "node/no-process-exit": "warn", // Discourage but not forbid process.exit()
+      "node/no-sync": ["warn", { allowAtRootLevel: false }], // Discourage synchronous methods
+
+      // Security Plugin Rules
+      "security/detect-non-literal-fs-filename": "warn", // Important for preventing path traversal
+      "security/detect-object-injection": "warn",
+      "security/detect-possible-timing-attacks": "warn",
+      "security/detect-eval-with-expression": "error",
+      "security/detect-no-csrf-before-method-override": "error",
+      "security/detect-buffer-noassert": "error",
+      "security/detect-child-process": "warn",
+      "security/detect-disable-mustache-escape": "error",
+      "security/detect-new-buffer": "error",
+      "security/detect-pseudoRandomBytes": "warn",
+      "security/detect-unsafe-regex": "warn",
+
+      // SonarJS Rules - Keeping key ones, refer to plugin for full list
+      "sonarjs/no-all-duplicated-branches": "error",
+      "sonarjs/no-element-overwrite": "error",
+      "sonarjs/no-identical-expressions": "error",
+      "sonarjs/no-one-iteration-loop": "error",
+      "sonarjs/no-use-of-empty-return-value": "error",
+      "sonarjs/cognitive-complexity": ["error", 15],
+      "sonarjs/max-switch-cases": ["error", 10],
+      "sonarjs/no-duplicate-string": ["warn", 5],
+
       // Unicorn Rules tailored for Node.js
       "unicorn/better-regex": "error",
       "unicorn/catch-error-name": "error",
@@ -223,6 +289,16 @@ export default defineConfig([
       "unicorn/no-null": "off", // Null is commonly used in Node.js APIs
       "unicorn/prefer-module": "off", // Flexible for CommonJS or ESM
       "unicorn/prefer-node-protocol": "error", // Use node: protocol for imports
+
+      // Promise Rules
+      "promise/always-return": "error",
+      "promise/no-return-wrap": "error",
+      "promise/param-names": "error",
+      "promise/catch-or-return": "error",
+      "promise/no-nesting": "warn",
+      "promise/no-promise-in-callback": "warn",
+      "promise/no-callback-in-promise": "warn",
+      "promise/no-return-in-finally": "error",
     }
   },
 
@@ -239,6 +315,8 @@ export default defineConfig([
       "no-magic-numbers": "off",
       "max-lines": "off",
       "max-nested-callbacks": "off",
+      "node/no-unpublished-require": "off",
+      "node/no-unpublished-import": "off"
     }
   }
 ]);

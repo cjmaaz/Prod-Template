@@ -1,45 +1,45 @@
 {
-  "name": "modern-fullstack-practice",
+  "name": "prod-template-fullstack",
   "version": "1.0.0",
+  "description": "Template for a prod level Node.js app.",
   "type": "module",
-  "keywords": [],
-  "main": "app.js",
-  "author": "Maaz",
-  "license": "ISC",
-  "description": "Prod Level Config",
+  "main": "src/app.js",
   "scripts": {
-    "prepare": "husky",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "format": "prettier --write .",
+    "prepare": "husky",
     "commitlint": "commitlint --edit"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cjmaaz/Prod-Template.git"
+  },
+  "keywords": [
+    "Node.js",
+    "JavaScript",
+    "ESlint",
+    "Jest"
+  ],
+  "author": "Maaz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cjmaaz/Prod-Template/issues"
+  },
+  "homepage": "https://github.com/cjmaaz/Prod-Template#readme",
   "devDependencies": {
     "@commitlint/cli": "^19.8.0",
     "@commitlint/config-conventional": "^19.8.0",
     "@eslint/js": "^9.26.0",
-    "@eslint/json": "^0.12.0",
-    "@eslint/markdown": "^6.4.0",
-    "@stylistic/eslint-plugin": "^4.2.0",
+    "@stylistic/eslint-plugin-js": "^4.2.0",
     "eslint": "^9.26.0",
-    "eslint-config-prettier": "^10.1.2",
     "eslint-plugin-import": "^2.31.0",
-    "eslint-plugin-unicorn": "^59.0.0",
+    "eslint-plugin-unicorn": "^59.0.1",
     "globals": "^16.0.0",
     "husky": "^9.1.7",
-    "lint-staged": "^15.5.1",
-    "prettier": "^3.5.3"
+    "lint-staged": "^15.5.2"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
-      "prettier --write"
-    ],
-    "*.{json,css,md}": [
-      "prettier --write"
-    ]
-  },
-  "dependencies": {
-    "mongoose": "^8.14.1"
+    "*": "eslint --fix"
   }
 }
