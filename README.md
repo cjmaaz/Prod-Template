@@ -4,15 +4,15 @@ This app is created as template to follow few configuration personal to me, this
 ### Dev Initialization
 Basic Initialization:
 ```bash
-npm i -D husky prettier lint-staged @commitlint/cli @commitlint/config-conventional
+npm i -D husky lint-staged @commitlint/cli @commitlint/config-conventional
 ```
 Eslint Initialization:
 ```bash
 npm init @eslint/config@latest
 ```
-ESlint Plugin and Prettier Config:
+ESlint Plugins::
 ```bash
-npm i -D eslint-config-prettier eslint-plugin-import @stylistic/eslint-plugin eslint-plugin-unicorn
+npm i -D eslint @eslint/js globals eslint-plugin-import eslint-plugin-node eslint-plugin-promise eslint-plugin-security eslint-plugin-sonarjs eslint-plugin-unicorn @stylistic/eslint-plugin-js
 ```
 Husky Config:
 ```bash
@@ -28,5 +28,5 @@ echo "npm run commitlint \${1}" > .husky/commit-msg
 ```
 ON Windows:
 ```bash
-echo "npm run commitlint `${1}" > .husky/commit-msg
+echo "npm run commitlint `$1" > .husky/commit-msg
 ```

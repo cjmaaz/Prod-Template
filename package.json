@@ -2,6 +2,7 @@
   "name": "prod-template-fullstack",
   "version": "1.0.0",
   "description": "Template for a prod level Node.js app.",
+  "type": "module",
   "main": "src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -33,10 +34,6 @@
     "@stylistic/eslint-plugin-js": "^4.2.0",
     "eslint": "^9.26.0",
     "eslint-plugin-import": "^2.31.0",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^7.2.1",
-    "eslint-plugin-security": "^3.0.1",
-    "eslint-plugin-sonarjs": "^3.0.2",
     "eslint-plugin-unicorn": "^59.0.1",
     "globals": "^16.0.0",
     "husky": "^9.1.7",
