@@ -4,7 +4,7 @@ This app is created as template to follow few configuration personal to me, this
 ## Docs
 [Link](https://github.com/cjmaaz/Prod-Template/blob/main/docs) to more markdown files for details about:
 - [Folder Structure](https://github.com/cjmaaz/Prod-Template/blob/main/docs/folderStructure.md)
-- [Database Opeartions](https://github.com/cjmaaz/Prod-Template/blob/main/docs/databaseOperation.md)
+- [Database Operations](https://github.com/cjmaaz/Prod-Template/blob/main/docs/databaseOperation.md)
 - [Router Params](https://github.com/cjmaaz/Prod-Template/blob/main/docs/routerParams.md)
 
 ### Dev Initialization
