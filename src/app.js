@@ -5,6 +5,8 @@ import appConfig from '../config/app.config.js';
 import initDatabase from './db/init.js';
 import validateContentType from './middleware/validateContentType.js';
 import logger from './utils/logger.js';
+import blogRouter from './routes/blogRoutes.js';
+
 
 const app = express();
 initDatabase();
@@ -23,11 +25,11 @@ app.get(`${appConfig.apiPrefix}/status`, (req, res) => {
 app.use(validateContentType);
 
 
-app.get(`${appConfig.apiPrefix}/`, (req, res) => {
-  res.json({
-    status: 'OK',
-    environment: process.env.NODE_ENV || 'development',
-  });
+app.use(`${appConfig.apiPrefix}/blog`, blogRouter);
+
+
+app.all(/.*/, (req, res) => {
+  res.status(404).send(`Can't find ${req.originalUrl} on this server.`);
 });
 
 app.listen(appConfig.port, () => {
