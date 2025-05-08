@@ -6,6 +6,8 @@ This app is created as template to follow few configuration personal to me, this
 - [Folder Structure](https://github.com/cjmaaz/Prod-Template/blob/main/docs/folderStructure.md)
 - [Database Operations](https://github.com/cjmaaz/Prod-Template/blob/main/docs/databaseOperation.md)
 - [Router Params](https://github.com/cjmaaz/Prod-Template/blob/main/docs/routerParams.md)
+- [Jest Overview](https://github.com/cjmaaz/Prod-Template/blob/main/docs/jestOverview.md)
+- [Github Actions Overview](https://github.com/cjmaaz/Prod-Template/blob/main/docs/githubActionsOverview.md)
 
 ### Dev Initialization
 Basic Initialization:
