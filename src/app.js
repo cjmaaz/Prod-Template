@@ -1,20 +1,35 @@
 import express from 'express';
 
-import config from '../config/app.config.js';
+import appConfig from '../config/app.config.js';
 
-import { validateContentType } from './middleware/validateContentType.js';
+import initDatabase from './db/init.js';
+import validateContentType from './middleware/validateContentType.js';
+import logger from './utils/logger.js';
 
 const app = express();
+initDatabase();
 
-if (config.allowedContentTypes.includes('application/json')) {
+if (appConfig.allowedContentTypes.includes('application/json')) {
   app.use(express.json());
 }
-if (config.allowedContentTypes.includes('application/x-www-form-urlencoded')) {
-  app.use(express.urlencoded({ extended: true }));
-}
+
+app.get(`${appConfig.apiPrefix}/status`, (req, res) => {
+  res.json({
+    status: 'OK',
+    environment: process.env.NODE_ENV || 'development',
+  });
+});
 
 app.use(validateContentType);
-app.use('/', (req, res) => res.send('Hello World'));
-app.listen(config.port, () => {
-  console.info(`Server running at http://localhost:${config.port}`);
+
+
+app.get(`${appConfig.apiPrefix}/`, (req, res) => {
+  res.json({
+    status: 'OK',
+    environment: process.env.NODE_ENV || 'development',
+  });
+});
+
+app.listen(appConfig.port, () => {
+  logger.info(`server running at: http://localhost:${appConfig.port}/`);
 });

@@ -176,3 +176,9 @@ project/
 ```
 
 ---
+
+## **Adding Logger**
+Install below packages:
+```bash
+npm i -D pino pino-pretty dayjs
+```
