@@ -51,3 +51,8 @@ Install below packages:
 ```bash
 npm i pino pino-pretty dayjs
 ```
+## **Setting Up Test Env**
+Install jest and mongodb-memory-server:
+```bash
+npm i -D jest mongodb-memory-server
+```
