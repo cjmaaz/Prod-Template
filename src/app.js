@@ -15,11 +15,31 @@ if (appConfig.allowedContentTypes.includes('application/json')) {
   app.use(express.json());
 }
 
+app.use((req, res, next) => {
+  const start = Date.now();
+  const requestLogger = logger.createRequestLogger
+    ? logger.createRequestLogger(req, res)
+    : logger;
+  req.log = requestLogger;
+  res.on('finish', () => {
+    const duration = Date.now() - start;
+    requestLogger.info({
+      responseTime: duration,
+      statusCode: res.statusCode,
+      contentLength: res.get('content-length')
+    }, 'Request completed');
+  });
+
+  next();
+});
+
 app.get(`${appConfig.apiPrefix}/status`, (req, res) => {
-  res.json({
+  const data = {
     status: 'OK',
     environment: process.env.NODE_ENV || 'development',
-  });
+  };
+  req.log.info(data, 'Users fetched successfully');
+  res.json(data);
 });
 
 app.use(validateContentType);

@@ -48,8 +48,8 @@ Adding nodemon to observe file change and updating script in package.json:
 ```bash
 npm i -D nodemon
 ```
-## **Adding Logger**
-Install below packages:
+## ~~Adding Logger~~
+~~Install below packages:~~
 ```bash
 npm i pino pino-pretty dayjs
 ```
@@ -57,4 +57,9 @@ npm i pino pino-pretty dayjs
 Install jest and mongodb-memory-server:
 ```bash
 npm i -D jest mongodb-memory-server
+```
+## **New Logger**
+Install below package:
+```bash
+npm i pino pino-pretty pino-roll
 ```
