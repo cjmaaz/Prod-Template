@@ -61,5 +61,5 @@ npm i -D jest mongodb-memory-server
 ## **New Logger**
 Install below package:
 ```bash
-npm i pino pino-pretty pino-roll
+npm i pino pino-pretty pino-roll dayjs
 ```

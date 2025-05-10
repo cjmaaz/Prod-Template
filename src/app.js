@@ -38,7 +38,7 @@ app.get(`${appConfig.apiPrefix}/status`, (req, res) => {
     status: 'OK',
     environment: process.env.NODE_ENV || 'development',
   };
-  req.log.info(data, 'Users fetched successfully');
+  req.log.info(data, 'status send successfully');
   res.json(data);
 });
 
@@ -49,6 +49,8 @@ app.use(`${appConfig.apiPrefix}/blog`, blogRouter);
 
 
 app.all(/.*/, (req, res) => {
+  const err = { message: `Can't find ${req.originalUrl} on this server.` };
+  req.log.error({ err }, 'Unhandled Params');
   res.status(404).send(`Can't find ${req.originalUrl} on this server.`);
 });
 
