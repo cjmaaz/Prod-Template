@@ -1,0 +1,25 @@
+{
+  "name": "node-prod-template",
+  "version": "1.0.0",
+  "description": "Node.js Production Template (ESM/JS)",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cjmaaz/Prod-Template.git"
+  },
+  "keywords": [
+    "Node.js",
+    "GitActions",
+    "Express",
+    "Jest"
+  ],
+  "author": "Maaz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cjmaaz/Prod-Template/issues"
+  },
+  "homepage": "https://github.com/cjmaaz/Prod-Template#readme"
+}
