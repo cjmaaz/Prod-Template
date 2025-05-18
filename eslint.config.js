@@ -79,6 +79,7 @@ export default defineConfig([
       'radix': 'error',  // Enforce the consistent use of the radix argument when using parseInt()
       'yoda': 'error',  // Disallow Yoda conditions (if (4 === count))
 
+
       // ===== IMPORT RULES =====
       'import/order': ['error', {
         groups: [  // Ordering of import statements
@@ -92,6 +93,7 @@ export default defineConfig([
         'newlines-between': 'always'  // Require newlines between import groups
       }],
       // ===== UNICORN RULES =====
+      'unicorn/better-regex': 'error',  // Use more efficient and clearer regular expressions
       'unicorn/catch-error-name': 'error',  // Use consistent error names in catch blocks
       'unicorn/error-message': 'error',  // Enforce error messages
       'unicorn/filename-case': ['error', {  // Enforce consistent filename casing
