@@ -9,6 +9,7 @@ This project template reflects my personal preferences and development practices
 # Step-Step Guide
 ### Index
 - [Initial Setup](#initial-setup)
+- [Initial Express With Environment Setup]()
 
 
 ## Docs
@@ -213,14 +214,54 @@ At last, configure the `package.json` to add few more scripts and property for t
 ## Initial Project Structure
 
 ```
-├── .github/workflows   # GitHub Actions CI/CD configuration
-├── .husky              # Git hooks
-├── .vscode             # VSCode settings
-├── .gitignore          # Git ignore file
-├── .gitattributes      # Git Attributes
-├── package.json        # Project metadata and dependencies
+├── .github/workflows     # GitHub Actions CI/CD configuration
+├── .husky                # Git hooks
+├── .vscode/settings.json # VSCode settings
+├── .gitignore            # Git ignore file
+├── .gitattributes        # Git Attributes
+├── commitlint.config.js  # Commitlint Configuration
+├── eslint.config.js      # Eslint Configuration
+├── package.json          # Project metadata and dependencies
 └── package-lock.json
 ```
+
+# Express Environment Setup
+
+### **Express, dotenvFlow and Cross Env Installation**
+
+Setting up node environment variable does not work properly in windows machine from script, so we are going to use `cross-env`.
+We'll be using `nodemon` to watch files and restart server in development environment.
+We are going to use **multiple environment variables** based on for what purpose our app is running for.
+Also, we are using `dotenv-flow` instead of `dotenv` as loading multiple files is just easier with it.
+
+```bash
+
+npm i express dotenv-flow chalk
+
+# Install cross-env as dev dependencies as most servers aren't windows
+npm i -D cross-env nodemon
+
+```
+Update the `package.json` file the dev script:
+```json
+{
+  "script":{
+    "dev":"cross-env NODE_ENV=development nodemon src/app.js"
+  }
+}
+```
+### Populate `.env` and `.env.development` files.
+```bash
+# Default .env variables
+APP_NAME=node-prod-template
+PORT=3000
+LOG_LEVEL=info
+LOG_FORMAT=json
+LOG_FILE_ENABLED=true
+LOG_MAX_SIZE=10m
+LOG_RETENTION_DAYS=7
+```
+Write the `app` and `dotenvFlow` logic.
 
 ## Logging
 
@@ -233,21 +274,21 @@ This template uses Pino for fast, structured logging and Pino-Roll for log rotat
 
 Logs are automatically rotated based on file size and retained according to configurable policies.
 
-## Testing
-
-Jest is configured for comprehensive testing:
-
-```javascript
-// Example test
-
-```
-
 ## Database
 
 Mongoose provides a straightforward way to model application data:
 
 ```javascript
 // Example model
+
+```
+
+## Testing
+
+Jest is configured for comprehensive testing:
+
+```javascript
+// Example test
 
 ```
 
