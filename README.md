@@ -9,7 +9,8 @@ This project template reflects my personal preferences and development practices
 # Step-Step Guide
 ### Index
 - [Initial Setup](#initial-setup)
-- [Initial Express With Environment Setup]()
+- [Initial Express With Environment Setup](#express-environment-setup)
+- [Logger Setup](#logger-with-pino-setup)
 
 
 ## Docs
@@ -263,13 +264,24 @@ LOG_RETENTION_DAYS=7
 ```
 Write the `app` and `dotenvFlow` logic.
 
+# Logger with `pino` Setup
+
 ## Logging
 
 This template uses Pino for fast, structured logging and Pino-Roll for log rotation:
 
 ```javascript
 // Example usage
+const logger = import('./utils/logger');
 
+logger.info('Application started');
+logger.error({ err }, 'An error occurred');
+```
+
+### Pino Installation
+We'll be installing `pino` with 2 of it's transport: `pino-pretty` and `pino-roll`.
+```bash
+npm i pino pino-pretty pino-roll
 ```
 
 Logs are automatically rotated based on file size and retained according to configurable policies.

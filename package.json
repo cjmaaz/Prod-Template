@@ -49,6 +49,9 @@
   "dependencies": {
     "chalk": "^5.4.1",
     "dotenv-flow": "^4.1.0",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "pino": "^9.6.0",
+    "pino-pretty": "^13.0.0",
+    "pino-roll": "^3.1.0"
   }
 }
