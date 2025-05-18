@@ -80,13 +80,13 @@ npm run lint
 
 # Initial Setup
 
-### Generate the package.json
+### **Generate the package.json**
 ```bash
 # Fill the project details or use -y flag
 npm init
 ```
 
-### Configure ESLint
+### **Configure ESLint**
 ```bash
 # Select options as per your needs
 npm init @eslint/config@latest
@@ -170,13 +170,52 @@ rules:{
 }
 ```
 
+### **Setup Husky, Lint-Staged and Commitlint**
+```bash
+# Install the packages as dev dependencies
+npm i -D husky lint-staged @commitlint/cli @commitlint/config-conventional
+
+# Initialize Husky
+npx husky init
+
+# Set commitlint script
+npm pkg set scripts.commitlint="commitlint --edit"
+
+# Create commitlint config `commitlint.config.js` file
+echo "export default { extends: ['@commitlint/config-conventional'] };" > commitlint.config.js
+
+# Setup `.husky/commit-msg` to run commitlint to verify commit message
+# On Linux/MacOS
+echo "npm run commitlint \$1" > .husky/commit-msg
+# On Windows
+echo "npm run commitlint `$1" > .husky/commit-msg
+```
+Now, add `lint-staged` command in pre-commit file.
+```bash
+# Comment npm test for now as we have not configured jest yet.
+# npm test
+npx lint-staged
+```
+
+At last, configure the `package.json` to add few more scripts and property for the lint-staged.
+```json
+{
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+  },
+  "lint-staged": {
+    "*": "eslint --fix"
+  },
+}
+```
 
 ## Initial Project Structure
 
 ```
 ├── .github/workflows   # GitHub Actions CI/CD configuration
 ├── .husky              # Git hooks
-├── src                 # Application source code
+├── .vscode             # VSCode settings
 ├── .gitignore          # Git ignore file
 ├── .gitattributes      # Git Attributes
 ├── package.json        # Project metadata and dependencies
